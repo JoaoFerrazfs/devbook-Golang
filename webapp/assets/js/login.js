@@ -1,4 +1,4 @@
-$('#login').on('submit', fazerLogin)
+$('#login').on('submit', fazerLogin);
 
 function fazerLogin(evento) {
     evento.preventDefault();
@@ -10,9 +10,9 @@ function fazerLogin(evento) {
             email: $('#email').val(),
             senha: $('#senha').val(),
         }
-    }).done(function(){
+    }).done(function() {
         window.location = "/home";
-    }).fail(function(){
-        alert("Usuario ou senha invalidos")
+    }).fail(function(reponse) {
+        alert("Erro: " + reponse.status + " - Usuario ou senha invalidos");
     })
 }

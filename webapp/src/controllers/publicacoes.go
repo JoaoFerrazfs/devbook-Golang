@@ -42,7 +42,7 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSON(w, response.StatusCode, nil)
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
 // Chama a API para curtir uma publicacao

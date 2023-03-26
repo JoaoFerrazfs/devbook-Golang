@@ -21,17 +21,18 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if erro != nil {
-		respostas.JSON(w, http.StatusBadGateway, respostas.ErroAPI{Erro: erro.Error()})
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
 	url := fmt.Sprintf("%s/login", config.ApiUrl)
-
 	response, erro := http.Post(url, "application/json", bytes.NewBuffer(usuario))
+
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
+	defer response.Body.Close()
 
 	if response.StatusCode >= 400 {
 		respostas.TratarStatusCodeDeErro(w, response)
@@ -49,6 +50,6 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, nil)
+	respostas.JSON(w, http.StatusOK, dadosAutenticacao)
 
 }
