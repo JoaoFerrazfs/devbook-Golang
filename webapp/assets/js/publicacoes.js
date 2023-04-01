@@ -19,7 +19,8 @@ function criarPublicacao(evento) {
     }).done(function() {
         window.location = "/home";
     }).fail(function() {
-        alert("Erro ao criar a publicação");
+        Swal.fire("Ops...", "Erro ao criar a publicação", "error");      
+    
     })
 }
 
@@ -44,7 +45,7 @@ function curtirPublicacao(evento) {
         elementoClicado.removeClass('curtir-publicacao');
 
     }).fail(function(){
-        alert("Erro ao curtir")
+        Swal.fire("Ops...", "Erro ao curtir", "error");         
     }).always(function(){
         elementoClicado.prop('disabled', false)
     });
@@ -72,7 +73,7 @@ function descurtirPublicacao(evento) {
         elementoClicado.addClass('curtir-publicacao');
 
     }).fail(function(){
-        alert("Erro ao curtir")
+        Swal.fire("Ops...", "Erro ao descurtir", "error");      
     }).always(function(){
         elementoClicado.prop('disabled', false)
     });
@@ -93,9 +94,16 @@ function atualizarPublicacao (evento){
                 conteudo: $('#conteudo').val()
             }
         }).done(function(){
-            alert("Publicacão editada com sucesso!");
+            Swal.fire(
+                'Sucesso',
+                'Publiacao criada com sucesso',
+                'success'
+              )
+              .then(function(){
+                window.location = "/home";
+              })
         }).fail(function(){
-            alert("Erro ao editar a publicacão");
+            Swal.fire("Ops...", "Erro ao editar a publicacão", "error");           
         }).always(function(){
             $('#atualizar-publicacao').prop('disabled', false)
         });
@@ -105,20 +113,32 @@ function atualizarPublicacao (evento){
 function deletarPublicacao(evento) {
     evento.preventDefault();
 
-    const elementoClicado = $(evento.target);
-    const publicacao =  elementoClicado.closest('div');    
-    const publicacaoId = publicacao.data('publicacao-id');
+    Swal.fire({
+        title: "Atenção!",
+        text: "Tem certeza que deseja excluir essa publicação? Essa ação é irreversivel! ",
+        showCancelButton: true,
+        cancelButton: "Cancelar",
+        icon: "warning",
+    }).then(function(confirmacao){
+        if(!confirmacao.value) return;
 
-    elementoClicado.prop('disabled', true);
-
-    $.ajax({
-        url: `/publicacoes/${publicacaoId}`,
-        method: "DELETE"
-    }).done(function() {
-        publicacao.fadeOut("slow", function() {
-            $(this).remove();
-        });
-    }).fail(function(){
-        alert("Erro ao Excluir a publicacão")
+        const elementoClicado = $(evento.target);
+        const publicacao =  elementoClicado.closest('div');    
+        const publicacaoId = publicacao.data('publicacao-id');
+    
+        elementoClicado.prop('disabled', true);
+    
+        $.ajax({
+            url: `/publicacoes/${publicacaoId}`,
+            method: "DELETE"
+        }).done(function() {
+            publicacao.fadeOut("slow", function() {
+                $(this).remove();
+            });
+        }).fail(function(){
+            Swal.fire("Ops...", "Erro ao Excluir a publicacão", "error");            
+        })
     })
+
+
 }
