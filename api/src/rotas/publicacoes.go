@@ -33,7 +33,7 @@ var rotasPublicacoes = []Rota{
 	{
 		URI:                  "/publicacoes/{publicaoId}",
 		Metodo:               http.MethodDelete,
-		Funcao:               controllers.DeletarPublicaco,
+		Funcao:               controllers.DeletarPublicacao,
 		RequerAutentificacao: true,
 	},
 	{

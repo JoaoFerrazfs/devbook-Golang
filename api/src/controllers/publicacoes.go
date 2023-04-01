@@ -174,7 +174,7 @@ func AtualizarPublicaco(w http.ResponseWriter, r *http.Request) {
 }
 
 // DeletarPublicaco apaga uma publicacao
-func DeletarPublicaco(w http.ResponseWriter, r *http.Request) {
+func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 	usuarioID, erro := autenticacao.ExtrairUsuarioId(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
