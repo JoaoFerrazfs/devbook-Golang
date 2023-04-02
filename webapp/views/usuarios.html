@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Devbook - Usuarios</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+    {{ template "cabecalho" }}
+
+    <div class="container-flud">
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">  Usuarios Cadastrados </h5>
+                           
+                            {{ range . }}
+
+                            <p class="card-text">
+                                {{ .Nome }} - <a href="/usuarios/{{ .ID }}" class=""> {{ .Nick }} </a>   - Membro Desde: {{ .CriadoEm.Format "02/01/2006" }}
+                            </p>
+
+                            {{ else }}
+
+                            <p class="card-test"> 
+                                Nenhum Usuarios Encontrado
+                            </p>
+
+                            {{ end }}
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{ template "rodape" }}
+    {{ template "scripts" }}
+
+
+
+</body>
+
+</html>
