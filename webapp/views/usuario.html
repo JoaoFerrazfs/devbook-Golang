@@ -29,31 +29,33 @@
                     <div class="card-body">
                         <h5 class="card-title">Perfil do Usuario</h5>
                         <h5 class="card-subtitle mb-2 text-muted">
-                            {{ .Usuario.Nome }} - {{ .Usuario.Nick }} - Membro Desde: {{ .Usuario.CriadoEm.Format "02/01/2006" }}
+                            {{ .Usuario.Nome }} - {{ .Usuario.Nick }} - Membro Desde: 
+                            {{ .Usuario.CriadoEm.Format "02/01/2006" }}
                         </h5>
 
-                        <p class="card-text">
-                            <a href="#">
+                         <div class="row">
+                            <a href="#"   data-bs-toggle="modal" data-bs-target="#modal-seguidores">
                                 Seguidores: {{ len .Usuario.Seguidores }}
-                            </a>
-                        </p>
-                        <p class="card-text">
-                            <a href="#">
-                                Seguidores: {{ len .Usuario.Seguindo }}
-                            </a>
-                        </p>
+                            </a>    
+                        </div>
 
-                        <a href="#" class="card-link">
+                        <div class="row">
+                            <a href="#"  data-bs-toggle="modal" data-bs-target="#modal-seguindo">
+                                Seguindo: {{ len .Usuario.Seguindo }}
+                            </a>
+                        </div>
+ 
+                      
 
                             {{ if $SeguidoPeloUsuarioLogado }}
 
-                            <button id="parar-de-seguir" class="btn btn-info" data-usuario-id="{{ .Usuario.ID }}">
+                            <button id="parar-de-seguir" class="btn btn-info mt-4" data-usuario-id="{{ .Usuario.ID }}">
                                 Parar de Seguir
                             </button>
 
                             {{ else }}
 
-                            <button id="seguir" class="btn btn-info" data-usuario-id="{{ .Usuario.ID }}">
+                            <button id="seguir" class="btn btn-info mt-4" data-usuario-id="{{ .Usuario.ID }}">
                                 Seguir
                             </button>
 
@@ -85,6 +87,9 @@
     </div>
 
 
+    {{ template "modal-seguidores" .Usuario }}
+    {{ template "modal-seguindo" .Usuario }}
+ 
     {{ template "rodape" }}
     {{ template "scripts" }}
 
